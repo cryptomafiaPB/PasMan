@@ -22,3 +22,4 @@ else:
     view()
     input()
 
+#for more info about us visit https://shaktimaan.w3spaces.com/ 
