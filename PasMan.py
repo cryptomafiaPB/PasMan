@@ -12,7 +12,7 @@ def view():
             print('\nUSERNAME::' + str(u[0]) + '  PASSWORD::' + str(u[1]))
 
 
-sp = 'RAM RAM'
+sp = 'Welcome \n PasMan'
 print(sp)
 op = input("Choose only one option [add/view]: ")
 if op=="add":
