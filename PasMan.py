@@ -1,25 +1,53 @@
-def stored():
-    use = input("Enter a username: ")
-    pas = input("Enter a pasword: ")
+from cryptography.fernet import Fernet
 
-    with open('pas.txt', 'a') as f:
-        print("\n" + f.write(str(use) + ' | ' + str(pas)))
-    
+def write_key():
+    key = Fernet.generate_key()
+    with open("key.key", "wb") as key_file:
+        key_file.write(key)
+
+
+def load_key():
+    file = open("key.key", "rb")
+    key = file.read()
+    file.close()
+    return key
+
+
+key = load_key()
+fer = Fernet(key)
+
+
 def view():
     with open('pas.txt', 'r') as f:
-        for i in f.readlines():
-            u = i.split('|')
-            print('\nUSERNAME::' + str(u[0]) + '  PASSWORD::' + str(u[1]))
+        for line in f.readlines():
+            data = line.rstrip()
+            user, passw = data.split("|")
+            print("User:", user, "| Password:",
+                  fer.decrypt(passw.encode()).decode())
 
 
-sp = 'Welcome \n PasMan'
-print(sp)
-op = input("Choose only one option [add/view]: ")
-if op=="add":
-    stored()
-    input()
-else:
-    view()
-    input()
+def add():
+    name = input('Account Name: ')
+    pwd = input("Password: ")
 
-#for more info about us visit https://shaktimaan.w3spaces.com/ 
+    with open('pas.txt', 'a') as f:
+        f.write(name + "|" + fer.encrypt(pwd.encode()).decode() + "\n")
+
+
+
+
+
+while True:
+    print("Thanks for using MAFIAPasMan\n\n")
+    mode = input(
+        "Choose one option (view, add), press q to quit? ").lower()
+    if mode == "q":
+        break
+
+    if mode == "view":
+        view()
+    elif mode == "add":
+        add()
+    else:
+        print("Invalid mode.")
+        continue
