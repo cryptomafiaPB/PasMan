@@ -1,20 +1,26 @@
 from cryptography.fernet import Fernet
 
+'''First 1) run the new file
+2) press q in first run
+3) Comment write_key() funtion and line
+4) now run code and add pass and view pass
+DONE!!
+'''
 def write_key():
-    key = Fernet.generate_key()
-    with open("key.key", "wb") as key_file:
-        key_file.write(key)
-
+    k = Fernet.generate_key()
+    with open("key.key", "ab") as key_file:
+        key_file.write(k)
+write_key()
 
 def load_key():
     file = open("key.key", "rb")
-    key = file.read()
+    k = file.read()
     file.close()
-    return key
+    return k
 
 
-key = load_key()
-fer = Fernet(key)
+k = load_key()
+fer = Fernet(k)
 
 
 def view():
@@ -33,10 +39,6 @@ def add():
     with open('pas.txt', 'a') as f:
         f.write(name + "|" + fer.encrypt(pwd.encode()).decode() + "\n")
 
-
-
-
-
 while True:
     print("Thanks for using MAFIAPasMan\n\n")
     mode = input(
@@ -46,6 +48,7 @@ while True:
 
     if mode == "view":
         view()
+        input()
     elif mode == "add":
         add()
     else:
